@@ -38,8 +38,10 @@ see https://www.gnu.org/licenses/.  */
 #ifndef __MINI_GMP_H__
 #define __MINI_GMP_H__
 
+#ifndef KERNEL
 /* For size_t */
-#include <stddef.h>
+# include <stddef.h>
+#endif
 
 #if defined (__cplusplus)
 extern "C" {
@@ -268,7 +270,7 @@ int mpz_init_set_str (mpz_t, const char *, int);
 /* This long list taken from gmp.h. */
 /* For reference, "defined(EOF)" cannot be used here.  In g++ 2.95.4,
    <iostream> defines EOF but not FILE.  */
-#if defined (FILE)                                              \
+#if defined (FILE) && !defined(KERNEL)                          \
   || defined (H_STDIO)                                          \
   || defined (_H_STDIO)               /* AIX */                 \
   || defined (_STDIO_H)               /* glibc, Sun, SCO */     \

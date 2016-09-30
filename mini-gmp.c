@@ -41,14 +41,30 @@ see https://www.gnu.org/licenses/.  */
    mpn/generic/sbpi1_div_qr.c, mpn/generic/sub_n.c,
    mpn/generic/submul_1.c. */
 
-#include <assert.h>
-#include <ctype.h>
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#ifdef KERNEL
+# include <linux/module.h>
+# include <linux/kernel.h>
+# include <linux/bitops.h>
+# include <linux/slab.h>
+# include <linux/ctype.h>
+#else
+# include <assert.h>
+# include <ctype.h>
+# include <limits.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+#endif
 
 #include "mini-gmp.h"
+
+#ifdef KERNEL
+# define CHAR_BIT BITS_PER_BYTE
+# define assert   BUG_ON
+# define free(p)       kfree(p)
+# define malloc(s)     kmalloc(s, GFP_KERNEL)
+# define realloc(o,n)  krealloc(o, n, GFP_KERNEL)
+#endif
 
 
 /* Macros */
@@ -240,12 +256,20 @@ const int mp_bits_per_limb = GMP_LIMB_BITS;
 
 
 /* Memory allocation and other helper functions. */
+#ifdef KERNEL
+static void
+gmp_die (const char *msg)
+{
+   panic(msg);
+}
+#else
 static void
 gmp_die (const char *msg)
 {
   fprintf (stderr, "%s\n", msg);
   abort();
 }
+#endif
 
 static void *
 gmp_default_alloc (size_t size)
@@ -4193,6 +4217,7 @@ mpz_init_set_str (mpz_t r, const char *sp, int base)
   return mpz_set_str (r, sp, base);
 }
 
+#ifndef KERNEL
 size_t
 mpz_out_str (FILE *stream, int base, const mpz_t x)
 {
@@ -4205,6 +4230,7 @@ mpz_out_str (FILE *stream, int base, const mpz_t x)
   gmp_free (str);
   return len;
 }
+#endif
 
 
 static int
