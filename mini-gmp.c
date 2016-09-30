@@ -66,6 +66,10 @@ see https://www.gnu.org/licenses/.  */
 # define realloc(o,n)  krealloc(o, n, GFP_KERNEL)
 #endif
 
+#ifdef KERNEL
+MODULE_LICENSE("GPL");
+#endif
+
 
 /* Macros */
 #define GMP_LIMB_BITS (sizeof(mp_limb_t) * CHAR_BIT)
