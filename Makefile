@@ -1,4 +1,5 @@
-obj-m += mini-gmp.o
+obj-m += minigmp.o
+minigmp-objs := mini-gmp.o export.o
 EXTRA_CFLAGS+=-DKERNEL=1
 
 all:
