@@ -1590,6 +1590,7 @@ mpz_roinit_n (mpz_t x, mp_srcptr xp, mp_size_t xs)
   return x;
 }
 
+#ifndef KERNEL
 
 /* Conversions and comparison to double. */
 void
@@ -1731,6 +1732,7 @@ mpz_cmp_d (const mpz_t x, double d)
 	return mpz_cmpabs_d (x, d);
     }
 }
+#endif
 
 
 /* MPZ comparisons and the like. */

@@ -131,8 +131,10 @@ int mpz_cmp_ui (const mpz_t, unsigned long);
 int mpz_cmp (const mpz_t, const mpz_t);
 int mpz_cmpabs_ui (const mpz_t, unsigned long);
 int mpz_cmpabs (const mpz_t, const mpz_t);
+#ifndef KERNEL
 int mpz_cmp_d (const mpz_t, double);
 int mpz_cmpabs_d (const mpz_t, double);
+#endif
 
 void mpz_abs (mpz_t, const mpz_t);
 void mpz_neg (mpz_t, const mpz_t);
@@ -239,7 +241,9 @@ int mpz_fits_slong_p (const mpz_t);
 int mpz_fits_ulong_p (const mpz_t);
 long int mpz_get_si (const mpz_t);
 unsigned long int mpz_get_ui (const mpz_t);
+#ifndef KERNEL
 double mpz_get_d (const mpz_t);
+#endif
 size_t mpz_size (const mpz_t);
 mp_limb_t mpz_getlimbn (const mpz_t, mp_size_t);
 
@@ -255,12 +259,16 @@ mpz_srcptr mpz_roinit_n (mpz_t, mp_srcptr, mp_size_t);
 void mpz_set_si (mpz_t, signed long int);
 void mpz_set_ui (mpz_t, unsigned long int);
 void mpz_set (mpz_t, const mpz_t);
+#ifndef KERNEL
 void mpz_set_d (mpz_t, double);
+#endif
 
 void mpz_init_set_si (mpz_t, signed long int);
 void mpz_init_set_ui (mpz_t, unsigned long int);
 void mpz_init_set (mpz_t, const mpz_t);
+#ifndef KERNEL
 void mpz_init_set_d (mpz_t, double);
+#endif
 
 size_t mpz_sizeinbase (const mpz_t, int);
 char *mpz_get_str (char *, int, const mpz_t);
